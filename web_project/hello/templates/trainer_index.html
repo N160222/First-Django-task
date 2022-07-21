@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Trainer</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- <link
+  rel="stylesheet"
+  href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+   integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+  crossorigin="anonymous" />  -->
+
+</head>
+<body>
+
+
+
+
+
+<div class="container">
+
+    <nav class="navbar navbar-expand-sm bg-primary navbar-dark">
+        <div class="container-fluid">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" href="#">Students</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'trainer_adding_student.html' %}">Add Student</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link " href="#">Work Assign</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'trainer_profile.html' %}">profile</a>
+            </li>
+
+            <li class="nav-item">
+              <img src="C:\Users\nookaraju.c\Downloads\bell.pnb" width="10" height="10" >
+            </li>
+
+            <!-- <li class="nav-item">
+              <i class="fa-solid fa-bell"></i>
+            </li>
+            <li class="nav-item">
+              <i class="fa fa-linkedin"> </i>
+              <i class="fa fa-linkedin" style="font-size:24px;color:red"></i>
+            </li> -->
+
+            
+            
+          </ul>
+        </div>
+        
+        
+        <div class="dropdown-menu" aria-labelledby="dropdownMenu2" >
+          {% for notification in  user.notifications.unread %}
+            <div>
+              Message from <b>{{ notification.actor }}</b>
+              <button class="dropdown-item" type="button">{{ notification.description }}</button>			
+            </div>
+            <div class="dropdown-divider"></div>
+          {% endfor %}
+        </div>
+        <a class="btn navbar-btn btn-danger navbar-right pull-right" role="button" href="{% url 'logout' %}">Logout</a>
+      </nav>
+    </div>
+
+
+    
+  {% if request.user.is_authenticated %}
+  <div class="container">
+  <h2 style="color: rgb(232, 9, 232);">{{request.user}}</h2>
+  <p>Username -->  {{ request.user.username }}</p>
+</div>
+{% else %}
+ 
+{% endif %}
+
+    <div class="container mt-3">
+      <h2>List of all students</h2>
+        <p>Where you can assign works</p> 
+
+  
+                   
+        <table class="table table-hover">
+          <thead>
+            <tr>
+                <th>ID No</th>
+              <th>Email</th>
+              <th>Phone</th>
+              
+            </tr>
+          </thead>
+          <tbody>
+            {% for x in trainer_students %}
+            <tr>
+                <td>{{x.id}}</td>
+              <td><a href="{{x.add_student_name}}">{{x.add_student_name}}</a></td>
+              <td>{{x.add_student_phone}}</td>
+              <!-- <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Work</button></td>
+              <td><button type="button" class="btn btn-success">Yes</button></td>
+            </tr> -->
+            <tr>
+
+
+            {% endfor %}
+                <!-- <td>2</td>
+              <td>Mary</td>
+              <td>mary@example.com</td>
+              <td><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@getbootstrap">Work</button></td>
+              <td><button type="button" class="btn btn-danger">Not</button></td>
+            </tr> -->
+            
+          </tbody>
+        </table>
+      </div>
+
+      <img src="bell.png" width="100" height="100" >
+
+
+
+      <!-- <p data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@fat">Open modal for @fat</p> -->
+      
+      
+      <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">New Work</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <form>
+                <div class="mb-3">
+                  <label for="recipient-name" class="col-form-label">Subject:</label>
+                  <input type="text" class="form-control" id="recipient-name">
+                </div>
+                <div class="mb-3">
+                  <label for="message-text" class="col-form-label">Question:</label>
+                  <textarea class="form-control" id="message-text"></textarea>
+                </div>
+              </form>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary">Send Work</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+
+
+
+      <div class="container">
+        <footer class="text-center text-lg-start" style="background-color: rgba(72, 69, 69, 0.867);">
+            <div class="text-center p-3" style="color: white;">
+              &copy; 2022 Copyright:
+              <a  href="{% url 'trainer_index' %}"style="color: white;">Web Project</a>
+            </div>
+          </footer>
+        </div>
+       
+</body>
+</html>
